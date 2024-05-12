@@ -31,7 +31,7 @@ const AddComment = ({ postId, comments }) => {
   return (
     <div className="bg-white rounded shadow">
       <div className="px-4 py-5 sm:p-6">
-        <h3 className="text-lg font-medium leading-6 text-blue-600">
+        <h3 className="text-lg font-medium leading-6 text-orange-500">
           Comments
         </h3>
         <div className="mt-5">
@@ -47,11 +47,11 @@ const AddComment = ({ postId, comments }) => {
               </div>
               <div className="flex-grow">
                 <div className="border rounded-lg shadow-sm">
-                  <div className="p-3 border-b bg-gray-50">
+                  {/* <div className="p-3 border-b bg-gray-50">
                     <h4 className="text-sm font-medium text-blue-600">
                       Add a comment
                     </h4>
-                  </div>
+                  </div> */}
                   <div className="p-3">
                     <label htmlFor="comment" className="sr-only">
                       Comment
@@ -59,7 +59,7 @@ const AddComment = ({ postId, comments }) => {
                     <textarea
                       id="comment"
                       rows={3}
-                      className="block w-full mt-1 border-gray-300 rounded-md shadow-sm form-textarea focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                      className="placeholder:italic block w-full mt-1 border-gray-300 rounded-md shadow-sm form-textarea focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                       placeholder="Your comment"
                       value={formData.message}
                       onChange={handleChange}
@@ -69,7 +69,7 @@ const AddComment = ({ postId, comments }) => {
                   <div className="flex items-center justify-end px-3 py-2 rounded-b-lg bg-gray-50">
                     <button
                       type="submit"
-                      className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                      className="px-4 py-2 text-white bg-orange-600 rounded hover:bg-orange-700 focus:outline-none focus:ring focus:ring-orange-500 focus:ring-opacity-50"
                     >
                       Submit
                     </button>

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendAccountVerificationEmailAction,
-  uploadProfileImageAction,
   userPrivateProfileAction,
 } from "../../redux/slices/users/usersSlices";
 import { useEffect } from "react";
@@ -9,7 +8,7 @@ import { useEffect } from "react";
 import { AiFillCamera } from "react-icons/ai";
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 import UserPosts from "./UserPosts";
-import Followers from "./Followers";
+// import Followers from "./Followers";
 import SuccessMsg from "../Alert/SuccessMsg";
 import { Link } from "react-router-dom";
 
@@ -22,7 +21,7 @@ export default function PrivateUserProfile() {
     dispatch(userPrivateProfileAction());
   }, [dispatch]);
 
-  const { user, loading, error, profile, userAuth, isEmailSent } = useSelector(
+  const { profile, userAuth, isEmailSent } = useSelector(
     (state) => state?.users
   );
   //! Send Account Verification Email Handler
@@ -36,9 +35,10 @@ export default function PrivateUserProfile() {
       {isEmailSent && (
         <SuccessMsg message="Email successfully sent, Check your email" />
       )}
+
       <div className="flex h-full">
         <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-          <div className="relative z-0 flex flex-1 overflow-hidden">
+          <div className="relative z-0 flex flex-1 overflow-hidden bg-white">
             <main className="relative z-0 flex-1 overflow-y-auto focus:outline-none xl:order-last">
               <article>
                 {/* Profile header */}
@@ -46,7 +46,7 @@ export default function PrivateUserProfile() {
                   <div>
                     <div>
                       <img
-                        className="object-cover w-full h-32 lg:h-48"
+                        className="object-cover w-full h-32 lg:h-60"
                         src={profile?.user?.coverImage}
                         alt={profile?.user?.username}
                       />
@@ -56,7 +56,7 @@ export default function PrivateUserProfile() {
                         className="cursor-pointer"
                       >
                         <Link to={"/upload-cover-image"}>
-                          <AiFillCamera className="absolute top-0  right-0 w-6 h-6 m-4 text-gray-200" />
+                          <AiFillCamera className="absolute top-20  right-0 w-6 h-6 m-4 text-gray-500" />
                         </Link>
                       </label>
                     </div>
@@ -67,7 +67,7 @@ export default function PrivateUserProfile() {
                       {/* Add CameraIcon for profile image upload */}
                       <div className="relative flex items-center justify-center">
                         <img
-                          className="w-24 h-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
+                          className="object-cover w-32 h-32 rounded-full ring-4 ring-white"
                           src={profile?.user?.profilePicture}
                           alt={profile?.user?.username}
                         />
@@ -90,17 +90,17 @@ export default function PrivateUserProfile() {
                         {!userAuth?.userInfo?.isVerified && (
                           <button
                             onClick={sendAccountVerificationEmailHandler}
-                            className="rounded-md mt-6 bg-yellow-50 p-4"
+                            className="rounded-md mt-6 bg-orange-400 p-4"
                           >
                             <div className="flex">
                               <div className="flex-shrink-0">
                                 <ExclamationTriangleIcon
-                                  className="h-5 w-5 text-yellow-400"
+                                  className="h-5 w-5 text-yellow-300"
                                   aria-hidden="true"
                                 />
                               </div>
                               <div className="ml-3">
-                                <h3 className="text-sm font-medium text-yellow-800">
+                                <h3 className="text-sm font-medium text-yellow-200">
                                   Click here to verify your account
                                 </h3>
                               </div>
@@ -133,7 +133,7 @@ export default function PrivateUserProfile() {
                                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                               />
                             </svg>
-                            20
+                            ({profile?.user?.profileViewers?.length})
                           </button>
 
                           {/* follow */}
@@ -153,7 +153,7 @@ export default function PrivateUserProfile() {
                                 clipRule="evenodd"
                               />
                             </svg>
-                            Followers
+                            Followers ({profile?.user?.followers?.length})
                           </button>
                         </div>
                       </div>
@@ -193,7 +193,7 @@ export default function PrivateUserProfile() {
                 </div>
                 {/* Posts Lists */}
                 <UserPosts posts={profile?.user?.posts} />
-                <Followers followers={profile?.user?.followers} />
+                {/* <Followers followers={profile?.user?.followers} /> */}
                 {/* Followed Users */}
                 {/* <UsersLists /> */}
               </article>

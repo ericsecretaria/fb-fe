@@ -205,10 +205,18 @@ export const addPostAction = createAsyncThunk(
     try {
       // convert the payload to formdata
       const formData = new FormData();
-      formData.append("title", payload?.title);
-      formData.append("content", payload?.content);
-      formData.append("categoryId", payload?.category);
+      // formData.append("title", payload?.title);
+      // formData.append("retest", payload?.retest);
+      // formData.append("content", payload?.content);
+      // formData.append("categoryId", payload?.category);
+      // formData.append("file", payload?.image);
+
+      formData.append("foodtitle", payload?.foodtitle);
+      formData.append("foodtimeprep", payload?.foodtimeprep);
+      formData.append("foodrecipe", payload?.foodrecipe);
       formData.append("file", payload?.image);
+      formData.append("categoryId", payload?.category);
+      formData.append("foodcontent", payload?.foodcontent);
 
       const token = getState().users?.userAuth?.userInfo?.token;
       const config = {
@@ -237,10 +245,16 @@ export const updatePostAction = createAsyncThunk(
     try {
       // convert the payload to formdata
       const formData = new FormData();
-      formData.append("title", payload?.title);
-      formData.append("content", payload?.content);
-      formData.append("categoryId", payload?.category);
+      // formData.append("title", payload?.title);
+      // formData.append("content", payload?.content);
+      // formData.append("categoryId", payload?.category);
+      // formData.append("file", payload?.image);
+      formData.append("foodtitle", payload?.foodtitle);
+      formData.append("foodtimeprep", payload?.foodtimeprep);
+      formData.append("foodrecipe", payload?.foodrecipe);
       formData.append("file", payload?.image);
+      formData.append("categoryId", payload?.category);
+      formData.append("foodcontent", payload?.foodcontent);
 
       const token = getState().users?.userAuth?.userInfo?.token;
       const config = {

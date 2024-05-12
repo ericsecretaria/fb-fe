@@ -186,6 +186,31 @@ export const followUserAction = createAsyncThunk(
   }
 );
 
+//! --------------- Profile View Action
+export const profileViewCountAction = createAsyncThunk(
+  "users/profile-viewer",
+  async (userId, { rejectWithValue, getState, dispatch }) => {
+    // make request
+    try {
+      const token = getState().users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        // can be response.data but destructured it into {data}
+        `${BASE_URL}/users/profile-viewer/${userId}`,
+        {},
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response.data);
+    }
+  }
+);
+
 //! --------------- UnFollow User Action
 export const unFollowUserAction = createAsyncThunk(
   "users/unfollow-user",
@@ -644,6 +669,23 @@ const usersSlice = createSlice({
     });
     //* handle the rejection state
     builder.addCase(unFollowUserAction.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    //? ---------------------------------------
+    //! Profile Views Count
+    builder.addCase(profileViewCountAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    // handle the fulfilled state
+    builder.addCase(profileViewCountAction.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.success = true;
+      state.loading = false;
+      state.error = null;
+    });
+    //* handle the rejection state
+    builder.addCase(profileViewCountAction.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
     });

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordAction } from "../../redux/slices/users/usersSlices";
 import { useParams } from "react-router-dom";
 import LoadingComponent from "../Alert/LoadingComponent";
-import SuccessMsg from "../Alert/SuccessMsg";
-import ErrorMsg from "../Alert/ErrorMsg";
+// import SuccessMsg from "../Alert/SuccessMsg";
+// import ErrorMsg from "../Alert/ErrorMsg";
 
 export const PasswordReset = () => {
   // Get the reset token from params
@@ -41,7 +41,7 @@ export const PasswordReset = () => {
   // data in store
   //const user = useSelector((state) => state);
   //console.log(user); suppose to be state.users.userinfo but destructure it.
-  const { loading, error, success } = useSelector((state) => state?.users);
+  const { loading } = useSelector((state) => state?.users);
   return (
     <form
       onSubmit={handleSubmit}
@@ -51,10 +51,10 @@ export const PasswordReset = () => {
         <h1 className="text-3xl font-bold text-gray-700 text-center mb-6">
           Reset your password
         </h1>
-        {success && (
+        {/* {success && (
           <SuccessMsg message="Password reset was successful, login with your new password" />
         )}
-        {error && <ErrorMsg message={error?.message} />}
+        {error && <ErrorMsg message={error?.message} />} */}
         <div className="mb-4 relative">
           <AiOutlineLock className="absolute text-gray-500 text-2xl top-2 left-2" />
           <input

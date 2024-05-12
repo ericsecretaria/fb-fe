@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
-import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
-import { addPostAction } from "../../redux/slices/posts/postsSlice";
+// import Select from "react-select";
+// import { fetchCategoriesAction } from "../../redux/slices/categories/categoriesSlice";
+// import { addPostAction } from "../../redux/slices/posts/postsSlice";
 import LoadingComponent from "../Alert/LoadingComponent";
-import ErrorMsg from "../Alert/ErrorMsg";
-import SuccessMsg from "../Alert/SuccessMsg";
+// import ErrorMsg from "../Alert/ErrorMsg";
+// import SuccessMsg from "../Alert/SuccessMsg";
 import { uploadCoverImageAction } from "../../redux/slices/users/usersSlices";
 
 const UploadCoverImage = () => {
   //fetch categories
   const dispatch = useDispatch();
   //! Error state
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
 
   useEffect(() => {}, [dispatch]);
 
@@ -20,20 +20,20 @@ const UploadCoverImage = () => {
     image: null,
   });
 
-  const { success, loading, error } = useSelector((state) => state?.users);
+  const { loading } = useSelector((state) => state?.users);
 
   //1. Validate form
-  const validateForm = (data) => {
-    let errors = {};
-    if (!data.image) errors.image = "Image is required";
-    return errors;
-  };
+  // const validateForm = (data) => {
+  //   let errors = {};
+  //   if (!data.image) errors.image = "Image is required";
+  //   return errors;
+  // };
   //2. Handle Blur
-  const handleBlur = (e) => {
-    const { name } = e.target;
-    const formErrors = validateForm(formData);
-    setErrors({ ...errors, [name]: formErrors[name] });
-  };
+  // const handleBlur = (e) => {
+  //   const { name } = e.target;
+  //   const formErrors = validateForm(formData);
+  //   setErrors({ ...errors, [name]: formErrors[name] });
+  // };
 
   //! Handle image change
   const HandleFileChange = (e) => {
@@ -42,56 +42,75 @@ const UploadCoverImage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errors = validateForm(formData);
-    setErrors(errors);
-    if (Object.keys(errors).length === 0) {
-      // console.log(formData);
-      // dispatch the action
-      dispatch(uploadCoverImageAction(formData));
-      e.preventDefault();
-    }
+    // const errors = validateForm(formData);
+    // setErrors(errors);
+    // if (Object.keys(errors).length === 0) {
+    // console.log(formData);
+    // dispatch the action
+    dispatch(uploadCoverImageAction(formData));
+    //   e.preventDefault();
+    // }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="w-full lg:w-1/2">
-        <div className="flex flex-col items-center p-10 xl:px-24 xl:pb-12 bg-white lg:max-w-xl lg:ml-auto rounded-4xl shadow-2xl">
-          <h2 className="mb-4 text-2xl md:text-3xl text-coolGray-900 font-bold text-center">
-            Upload Cover Image
-          </h2>
+    <div className="flex justify-center items-center font-[sans-serif] text-[#333] h-full min-h-screen p-4 bg-orange-400">
+      <div className="max-w-md w-full mx-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-opacity-50 bg-white rounded-2xl p-6 shadow-[0_2px_16px_-3px_rgba(6,81,237,0.3)] mt-16"
+        >
           {/* Error Here */}
           {/* {error && <ErrorMsg message={error?.message} />}
-          {success && <SuccessMsg message="Post created successfully" />} */}
-          <h3 className="mb-7 text-base md:text-lg text-coolGray-500 font-medium text-center">
+          {success && (
+            <SuccessMsg message="Profile picture uploaded successfully" />
+          )} */}
+          <h3 className="mb-7 text-base md:text-lg text-coolGray-900 font-medium text-center">
             Upload or update Cover Image
           </h3>
+          <div className="mt-8">
+            <div className="relative flex items-center text-orange-500">
+              <input
+                name="image"
+                type="file"
+                className="bg-transparent rounded-lg w-full text-sm border-b border-white px-2 py-3 outline-none placeholder:text-orange-500"
+                placeholder="Cover image"
+                onChange={HandleFileChange}
+              />
+              <svg
+                viewBox="0 0 1024 1024"
+                fill="black"
+                stroke="black"
+                className="w-[18px] h-[18px] absolute right-2"
+              >
+                <path d="M864 248H728l-32.4-90.8a32.07 32.07 0 00-30.2-21.2H358.6c-13.5 0-25.6 8.5-30.1 21.2L296 248H160c-44.2 0-80 35.8-80 80v456c0 44.2 35.8 80 80 80h704c44.2 0 80-35.8 80-80V328c0-44.2-35.8-80-80-80zm8 536c0 4.4-3.6 8-8 8H160c-4.4 0-8-3.6-8-8V328c0-4.4 3.6-8 8-8h186.7l17.1-47.8 22.9-64.2h250.5l22.9 64.2 17.1 47.8H864c4.4 0 8 3.6 8 8v456zM512 384c-88.4 0-160 71.6-160 160s71.6 160 160 160 160-71.6 160-160-71.6-160-160-160zm0 256c-53 0-96-43-96-96s43-96 96-96 96 43 96 96-43 96-96 96z" />
+              </svg>
+            </div>
+          </div>
 
-          <label className="mb-4 flex flex-col w-full">
-            <span className="mb-1 text-coolGray-800 font-medium">Image</span>
-            <input
-              className="py-3 px-3 leading-5 w-full text-coolGray-400 font-normal border border-coolGray-200 outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-lg shadow-sm"
-              type="file"
-              name="image"
-              onChange={HandleFileChange}
-              onBlur={handleBlur}
-            />
-            {/* error here */}
-            {errors?.image && <p className="text-red-500">{errors.image}</p>}
-          </label>
+          <div className="mt-10">
+            {loading ? (
+              <LoadingComponent />
+            ) : (
+              <button
+                type="submit"
+                className="w-full py-2.5 px-4 text-sm font-semibold rounded-full text-white bg-orange-600 hover:bg-orange-700 focus:outline-none"
+              >
+                Upload Cover Image
+              </button>
+            )}
 
-          {/* button */}
-          {loading ? (
-            <LoadingComponent />
-          ) : (
-            <button
-              className="mb-4 inline-block py-3 px-7 w-full leading-6 text-green-50 font-medium text-center bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md"
-              type="submit"
+            {/* <p className="text-sm text-center font-bold mt-6 text-black">
+            I don't want to update my profile,
+            <Link
+              to="/user-profile"
+              className="font-semibold hover:underline ml-1 whitespace-nowrap text-orange-600"
             >
-              Upload Cover Image
-            </button>
-          )}
-        </div>
-      </form>
+              Take me back
+            </Link>
+          </p> */}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const PostStats = ({
   likes,
   dislikes,
   totalComments,
-  readingTime,
+  // readingTime,
   createdAt,
   postId,
   claps,
@@ -130,7 +130,7 @@ const PostStats = ({
 
         {totalComments}
       </div>
-      <div className="flex items-center gap-1 m-2 text-2xl text-gray-400">
+      {/* <div className="flex items-center gap-1 m-2 text-2xl text-gray-400">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -146,7 +146,7 @@ const PostStats = ({
           />
         </svg>
         {readingTime} min read
-      </div>
+      </div> */}
 
       <div className="flex items-center gap-1 m-2 text-2xl text-gray-400">
         <svg

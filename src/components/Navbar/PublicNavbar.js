@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaBlog } from "react-icons/fa";
 
 function classNames(...classes) {
@@ -10,14 +10,116 @@ function classNames(...classes) {
 }
 
 export default function PublicNavbar() {
+  const navigate = useNavigate();
+  let { pathname } = useLocation();
+  let subpage = pathname.split("/")?.[1].toString();
+  console.log(subpage);
+
+  function linkClassess(path) {
+    let classes =
+      "inline-flex items-center border-b-2  px-1 pt-1 pb-3 text-sm font-medium hover:border-orange-600";
+
+    if (subpage.toString() === path.toString()) {
+      classes += " border-orange-500";
+    } else {
+      classes += " border-transparent";
+    }
+    return classes;
+  }
+
+  const homeHandler = () => {
+    navigate("/");
+  };
+  const recipeHandler = () => {
+    navigate("/posts");
+  };
+  const loginHandler = () => {
+    navigate("/login");
+  };
+
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-transparent">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="pl-4 pr-4 md:px-8 fixed inset-x-0 top-0 z-50 text-white bg-gray-900 bg-opacity-30">
             <div className="flex h-16 justify-between">
               <div className="flex">
-                <div className="-ml-2 mr-2 flex items-center md:hidden">
+                <div className="flex flex-shrink-0 justify-center items-center inline-flex md:hidden">
+                  {/* Logo here */}
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">F</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">D</h1>
+                  </div>
+                  <div class="flex justify-center w-2 items-center">
+                    <span className=" text-orange-600 text-xs">•</span>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">B</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">K</h1>
+                  </div>
+                </div>
+
+                <div className="flex flex-shrink-0 items-center hidden md:inline-flex">
+                  {/* <div className="flex flex-shrink-0 justify-center items-center "> */}
+                  {/* Logo here */}
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">F</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">D</h1>
+                  </div>
+                  <div class="flex justify-center w-2 items-center">
+                    <span className=" text-orange-600 text-xs">•</span>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">B</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">O</h1>
+                  </div>
+                  <div class="flex justify-center items-center  w-5 h-5 rounded-full border-2 md:border-1 border-white text-white">
+                    <h1 className="text-xs">K</h1>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="hidden md:ml-6 md:flex md:space-x-8">
+                  <Link className={linkClassess("")} to={"/"}>
+                    Home
+                  </Link>
+                  <Link className={linkClassess("posts")} to={"/posts"}>
+                    Recipes
+                  </Link>
+                  <Link className={linkClassess("login")} to={"/login"}>
+                    Login
+                  </Link>
+                </div>
+                <div className="flex items-center md:hidden">
                   {/* Mobile menu button */}
                   <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                     <span className="sr-only">Open main menu</span>
@@ -28,71 +130,34 @@ export default function PublicNavbar() {
                     )}
                   </Disclosure.Button>
                 </div>
-                <div className="flex flex-shrink-0 items-center">
-                  {/* Logo here */}
-                  <FaBlog className="block text-green-500 h-8 w-auto lg:hidden" />
-                  <FaBlog className="hidden text-green-500 h-8 w-auto lg:block" />
-                </div>
-                <div className="hidden md:ml-6 md:flex md:space-x-8">
-                  {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                  <Link
-                    to={"/"}
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to={"/posts"}
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Posts
-                  </Link>
-                  <Link
-                    to={"/login"}
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to={"/register"}
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Register
-                  </Link>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <Link
-                    to={"/add-post"}
-                    className="ml-2 relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    <PlusIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-                    Add New Post
-                  </Link>
-                </div>
+                <div className="flex-shrink-0"></div>
               </div>
             </div>
-          </div>
 
-          <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 pt-2 pb-3">
-              {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-              <Disclosure.Button
-                as="a"
-                href="#"
-                className="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700 sm:pl-5 sm:pr-6"
-              >
-                Home
-              </Disclosure.Button>
-              <Link
-                to={"/posts"}
-                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
-              >
-                Posts
-              </Link>
-            </div>
-          </Disclosure.Panel>
+            <Disclosure.Panel className="md:hidden bg-gray-800 relative z-50 px-4">
+              <div className="space-y-1 pt-2 pb-3">
+                {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
+                <Disclosure.Button
+                  onClick={homeHandler}
+                  className="block py-2 text-base font-medium text-white hover:bg-text-orange-500 hover:text-orange-500"
+                >
+                  Home
+                </Disclosure.Button>
+                <Disclosure.Button
+                  onClick={recipeHandler}
+                  className="block  py-2 text-base font-medium text-white hover:bg-text-orange-500 hover:text-orange-500"
+                >
+                  Recipes
+                </Disclosure.Button>
+                <Disclosure.Button
+                  onClick={loginHandler}
+                  className="block  py-2 text-base font-medium text-white hover:bg-text-orange-500 hover:text-orange-500"
+                >
+                  Login
+                </Disclosure.Button>
+              </div>
+            </Disclosure.Panel>
+          </div>
         </>
       )}
     </Disclosure>

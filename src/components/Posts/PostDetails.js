@@ -6,10 +6,10 @@ import {
 } from "../../redux/slices/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import LoadingComponent from "../Alert/LoadingComponent";
+// import LoadingComponent from "../Alert/LoadingComponent";
 import ErrorMsg from "../Alert/ErrorMsg";
 import PostStats from "./PostStats";
-import calculateReadingTime from "../../utils/calculateReadingTime";
+// import calculateReadingTime from "../../utils/calculateReadingTime";
 import AddComment from "../Comments/AddComment";
 
 const PostDetails = () => {
@@ -17,24 +17,29 @@ const PostDetails = () => {
   const navigate = useNavigate();
   //! redux store
   const dispatch = useDispatch();
-  const { post, error, loading, success } = useSelector(
-    (state) => state?.posts
-  );
+  const { post, error, success } = useSelector((state) => state?.posts);
+  //! Get the creator of the post
+  const creator = post?.post?.author?._id?.toString();
   //! Get Params
   const { postId } = useParams();
   //dispatch
   useEffect(() => {
     dispatch(getPostAction(postId));
-  }, [dispatch, postId, post?.post?.likes.length, post?.post?.likes.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, post?.post?.likes.length, post?.post?.likes.length, creator]);
   //   console.log(post);
 
   //! Post view
   useEffect(() => {
     dispatch(postViewCountAction(postId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  //! Get the creator of the post
-  const creator = post?.post?.author?._id?.toString();
+  useEffect(() => {
+    window.scroll(0, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   //! Get the login user
   const { userAuth } = useSelector((state) => state?.users);
   const loginUser = userAuth?.userInfo?._id?.toString();
@@ -43,17 +48,28 @@ const PostDetails = () => {
   //! Delete Post Handler
   const deletePostHandler = () => {
     dispatch(deletePostAction(postId));
+
     if (success) {
+      window.location.reload();
       navigate("/posts");
+      window.scrollTo(0, 0);
     }
   };
+
+  if (!post || !post.post || !post.post.foodrecipe) {
+    // Handle the case when post or its properties are undefined
+    return null;
+  }
+  const text = post.post.foodrecipe;
+  const lines = text.split(".");
+
   return (
     <>
       {error ? (
         <ErrorMsg message={error?.message} />
       ) : (
         <section
-          className="py-16 bg-white md:py-24"
+          className="py-16 bg-white md:py-24 md:px-24"
           style={{
             backgroundImage: 'url("flex-ui-assets/elements/pattern-white.svg")',
             backgroundRepeat: "no-repeat",
@@ -62,20 +78,8 @@ const PostDetails = () => {
         >
           <div className="container px-4 mx-auto">
             <div className="mx-auto mb-12 text-center md:max-w-2xl">
-              <div className="inline-block px-3 py-1 mb-6 text-xs font-medium leading-5 text-green-500 uppercase bg-green-100 rounded-full shadow-sm">
-                {post?.post?.category?.name}
-              </div>
-              <div className="flex items-center justify-center">
-                <p className="inline-block font-medium text-green-500">
-                  {post?.post?.author?.username}
-                </p>
-                <span className="mx-1 text-green-500">•</span>
-                <p className="inline-block font-medium text-green-500">
-                  {new Date(post?.post?.createdAt).toDateString()}
-                </p>
-              </div>
               <h2 className="mb-4 text-3xl font-bold leading-tight tracking-tighter md:text-5xl text-darkCoolGray-900">
-                {post?.post?.title}
+                {post?.post?.foodtitle}
               </h2>
 
               <Link
@@ -85,22 +89,30 @@ const PostDetails = () => {
                 <div className="w-auto px-2">
                   <img
                     className="w-12 h-12 rounded-full"
-                    src={post?.post?.image}
-                    alt="post-image"
+                    src={post?.post?.author?.profilePicture}
+                    alt="post-author"
                   />
                 </div>
                 <div className="w-auto px-2">
                   <h4 className="text-base font-bold md:text-lg text-coolGray-800">
-                    {post?.post?.author?.username}
+                    {post?.post?.author?.username}{" "}
+                    <span className="mx-1 text-orange-500">•</span>
+                    <p className="inline-block font-medium text-orange-500">
+                      {new Date(post?.post?.createdAt).toDateString()}
+                    </p>
                   </h4>
                 </div>
               </Link>
+              <div className="inline-block px-3 mt-5 py-1 mb-6 text-xs font-medium leading-5 text-orange-500  bg-orange-100 rounded-full shadow-sm italic">
+                {post?.post?.category?.name}
+              </div>
             </div>
           </div>
+
           <img
-            className="w-full mx-auto mb-4 mb-10"
+            className="w-full mx-auto mb-4 mb-10 rounded-2xl px-1 md:w-4/6 md:h-4/6"
             src={post?.post?.image}
-            alt="post-image"
+            alt="post-food"
           />
 
           <div
@@ -119,16 +131,13 @@ const PostDetails = () => {
               postViews={post?.post?.postViews.length}
               totalComments={post?.post?.comments.length}
               createdAt={post?.post?.createdAt}
-              readingTime={calculateReadingTime(post?.post?.content)}
+              // readingTime={calculateReadingTime(post?.post?.content)}
               postId={post?.post?._id}
               claps={post?.post?.claps}
             />
           </div>
           <div className="container px-4 mx-auto">
             <div className="mx-auto md:max-w-3xl">
-              <p className="pb-10 mb-8 text-lg font-medium border-b md:text-xl text-coolGray-500 border-coolGray-100">
-                {post?.post?.content}
-              </p>
               {/* delete and update icons */}
               {isCreator && (
                 <div className="flex justify-end mb-4">
@@ -142,7 +151,7 @@ const PostDetails = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
-                      stroke="currentColor"
+                      stroke="#FC2E20"
                       class="w-6 h-6"
                     >
                       <path
@@ -162,7 +171,7 @@ const PostDetails = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
-                      stroke="currentColor"
+                      stroke="#FC2E20"
                       class="w-6 h-6"
                     >
                       <path
@@ -174,8 +183,40 @@ const PostDetails = () => {
                   </button>
                 </div>
               )}
-              <h3 className="mb-4 text-2xl font-semibold md:text-3xl text-coolGray-800">
-                Add a comment
+
+              {/* recipe guides */}
+              <div className="bg-white rounded shadow">
+                <div className="px-4 py-5 sm:p-6">
+                  <h3 className="text-lg font-medium leading-6 text-orange-500">
+                    Description:
+                  </h3>
+                  <hr className="mb-2 border-gray-300" />
+                  <div className="mb-10">
+                    <p>{post?.post?.foodcontent}</p>
+                  </div>
+
+                  <h3 className="text-lg font-medium leading-6 text-orange-500">
+                    Ingredients:
+                  </h3>
+                  <hr className="mb-2 border-gray-300" />
+
+                  <div className="whitespace-pre-wrap">
+                    {lines.map((line, index) => (
+                      <p key={index}>{line.trim()}</p>
+                    ))}
+                  </div>
+
+                  {/* <div className="mt-5">
+                    <hr className="mt-5 border-gray-300" />
+                    <h3 className="text-lg font-medium leading-6 text-blue-600">
+                      How to cook:
+                    </h3>
+                  </div> */}
+                </div>
+              </div>
+
+              <h3 className="mb-4 text-2xl font-semibold md:text-3xl text-coolGray-800 mt-20">
+                Leave a comment
               </h3>
 
               {/* Comment form */}

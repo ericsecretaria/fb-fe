@@ -19,18 +19,18 @@ const CommentsList = ({ comments }) => {
               comments?.map((comment) => {
                 return (
                   <>
-                    <div className="bg-blue-50 px-4 py-3 sm:px-6 flex justify-between items-center mt-2">
+                    <div className="bg-orange-50 px-4 py-3 sm:px-6 flex justify-between items-center mt-2">
                       <div>
-                        <h4 className="text-sm font-medium text-blue-600">
+                        <h4 className="text-sm font-medium text-orange-500">
                           {comment?.author?.username}
                         </h4>
-                        <p className="text-sm text-gray-500">
+                        <span className="text-sm text-gray-500 italic">
                           {new Date(comment?.createdAt).toDateString()}
-                        </p>
+                        </span>
                       </div>
                     </div>
-                    <div className="bg-blue-50 px-4 py-3 sm:px-6">
-                      <p className="mt-1 text-sm text-gray-700">
+                    <div className="bg-orange-50 px-4 pb-4 sm:px-6">
+                      <p className="text-sm text-gray-700">
                         {comment?.message}
                       </p>
                     </div>
