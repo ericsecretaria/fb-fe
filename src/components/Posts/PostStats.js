@@ -9,7 +9,7 @@ import {
 } from "../../redux/slices/posts/postsSlice";
 
 const PostStats = ({
-  views,
+  postViews,
   likes,
   dislikes,
   totalComments,
@@ -60,7 +60,7 @@ const PostStats = ({
           />
         </svg>
 
-        {views}
+        {postViews}
       </div>
       <button
         onClick={likepostHandler}

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {
   deletePostAction,
   getPostAction,
-  postViewCountAction,
+  // postViewCountAction,
 } from "../../redux/slices/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -30,10 +30,10 @@ const PostDetails = () => {
   //   console.log(post);
 
   //! Post view
-  useEffect(() => {
-    dispatch(postViewCountAction(postId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(postViewCountAction(postId));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dispatch]);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -125,10 +125,9 @@ const PostDetails = () => {
           >
             {/* Posts stats */}
             <PostStats
-              views={post?.post?.postViews.length}
+              postViews={post?.post?.postViews.length}
               likes={post?.post?.likes.length}
               dislikes={post?.post?.dislikes.length}
-              postViews={post?.post?.postViews.length}
               totalComments={post?.post?.comments.length}
               createdAt={post?.post?.createdAt}
               // readingTime={calculateReadingTime(post?.post?.content)}
