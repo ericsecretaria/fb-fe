@@ -26,7 +26,12 @@ const PostDetails = () => {
   useEffect(() => {
     dispatch(getPostAction(postId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, post?.post?.likes.length, post?.post?.likes.length, creator]);
+  }, [
+    dispatch,
+    post?.post?.likes.length,
+    post?.post?.dislikes.length,
+    creator,
+  ]);
   //   console.log(post);
 
   //! Post view
