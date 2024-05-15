@@ -39,24 +39,6 @@ const AddPost = () => {
     foodcontent: "",
   });
 
-  //1. Validate form
-  // const validateForm = (data) => {
-  //   let errors = {};
-  //   if (!data.foodtitle) errors.foodtitle = "foodtitle is required";
-  //   if (!data.foodtimeprep) errors.foodtimeprep = "foodtimeprep is required";
-  //   if (!data.foodrecipe) errors.foodrecipe = "foodrecipe is required";
-  //   if (!data.image) errors.image = "image is required";
-  //   if (!data.category) errors.category = "category is required";
-  //   if (!data.foodcontent) errors.foodcontent = "foodcontent is required";
-  //   return errors;
-  // };
-  //2. Handle Blur
-  // const handleBlur = (e) => {
-  //   const { name } = e.target;
-  //   const formErrors = validateForm(formData);
-  //   setErrors({ ...errors, [name]: formErrors[name] });
-  // };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -75,24 +57,6 @@ const AddPost = () => {
     e.preventDefault();
     console.log(formData);
     dispatch(addPostAction(formData));
-    // const errors = validateForm(formData);
-    // setErrors(errors);
-    // if (Object.keys(errors).length === 0) {
-    //   // console.log(formData);
-    //   // dispatch the action
-
-    //   dispatch(addPostAction(formData));
-    //   e.preventDefault();
-
-    //   setFormData({
-    //     foodtitle: "",
-    //     foodtimeprep: "",
-    //     foodrecipe: "",
-    //     image: null,
-    //     category: null,
-    //     foodcontent: "",
-    //   });
-    // }
   };
 
   //! Redirect Post Handler

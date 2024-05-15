@@ -98,29 +98,29 @@ export const deletePostAction = createAsyncThunk(
 );
 
 //! ---------------  post view count
-export const postViewCountAction = createAsyncThunk(
-  "posts/post-views",
-  async (postId, { rejectWithValue, getState, dispatch }) => {
-    // make request
-    try {
-      const token = getState().users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const { data } = await axios.put(
-        // can be response.data but destructured it into {data}
-        `${BASE_URL}/posts/${postId}/post-view-count`,
-        {},
-        config
-      );
-      return data;
-    } catch (error) {
-      return rejectWithValue(error?.response.data);
-    }
-  }
-);
+// export const postViewCountAction = createAsyncThunk(
+//   "posts/post-views",
+//   async (postId, { rejectWithValue, getState, dispatch }) => {
+//     // make request
+//     try {
+//       const token = getState().users?.userAuth?.userInfo?.token;
+//       const config = {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       };
+//       const { data } = await axios.put(
+//         // can be response.data but destructured it into {data}
+//         `${BASE_URL}/posts/${postId}/post-view-count`,
+//         {},
+//         config
+//       );
+//       return data;
+//     } catch (error) {
+//       return rejectWithValue(error?.response.data);
+//     }
+//   }
+// );
 
 //! ---------------  like post
 export const likePostAction = createAsyncThunk(
@@ -394,21 +394,21 @@ const postSlice = createSlice({
       state.loading = false;
     });
 
-    //!  post view -------------------------------------
-    builder.addCase(postViewCountAction.pending, (state, action) => {
-      state.loading = true;
-    });
-    // handle the fulfilled state
-    builder.addCase(postViewCountAction.fulfilled, (state, action) => {
-      state.post = action.payload;
-      state.loading = false;
-      state.error = null;
-    });
-    //* handle the rejection state
-    builder.addCase(postViewCountAction.rejected, (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
-    });
+    // //!  post view -------------------------------------
+    // builder.addCase(postViewCountAction.pending, (state, action) => {
+    //   state.loading = true;
+    // });
+    // // handle the fulfilled state
+    // builder.addCase(postViewCountAction.fulfilled, (state, action) => {
+    //   state.post = action.payload;
+    //   state.loading = false;
+    //   state.error = null;
+    // });
+    // //* handle the rejection state
+    // builder.addCase(postViewCountAction.rejected, (state, action) => {
+    //   state.error = action.payload;
+    //   state.loading = false;
+    // });
 
     //!  clap post -------------------------------------
     builder.addCase(clapPostAction.pending, (state, action) => {

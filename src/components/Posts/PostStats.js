@@ -13,7 +13,6 @@ const PostStats = ({
   likes,
   dislikes,
   totalComments,
-  // readingTime,
   createdAt,
   postId,
   claps,
